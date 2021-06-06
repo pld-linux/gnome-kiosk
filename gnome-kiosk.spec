@@ -2,7 +2,7 @@ Summary:	GNOME Kiosk - Mutter based compositor for kiosks
 Summary(pl.UTF-8):	GNOME Kiosk - oparty na Mutter zarządca składania dla punktów sprzedaży
 Name:		gnome-kiosk
 Version:	40.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://download.gnome.org/sources/gnome-kiosk/40/%{name}-%{version}.tar.xz
@@ -20,7 +20,7 @@ BuildRequires:	xz
 Requires:	dbus
 Requires:	gdm
 Requires:	gnome-desktop >= 3.0
-Requires:	gnome-session-manager
+Requires:	gnome-session
 Requires:	gnome-settings-daemon
 Requires:	ibus >= 1.0
 Requires:	mutter >= 40
