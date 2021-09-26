@@ -1,20 +1,22 @@
 Summary:	GNOME Kiosk - Mutter based compositor for kiosks
 Summary(pl.UTF-8):	GNOME Kiosk - oparty na Mutter zarządca składania dla punktów sprzedaży
 Name:		gnome-kiosk
-Version:	40.0
-Release:	2
+Version:	41.0
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-kiosk/40/%{name}-%{version}.tar.xz
-# Source0-md5:	bb23a8745a5a270c06042df001859b6c
+Source0:	https://download.gnome.org/sources/gnome-kiosk/41/%{name}-%{version}.tar.xz
+# Source0-md5:	577da387d7395022098a531ae7e06216
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gnome-desktop-devel >= 3.0
+BuildRequires:	gtk4-devel >= 4.0
 BuildRequires:	ibus-devel >= 1.0
 BuildRequires:	meson
-BuildRequires:	mutter-devel >= 40
+BuildRequires:	mutter-devel >= 41
 BuildRequires:	ninja >= 1.5
 BuildRequires:	rpmbuild(macros) >= 1.596
+BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	dbus
@@ -74,8 +76,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS README.md
 %attr(755,root,root) %{_bindir}/gnome-kiosk
+%attr(755,root,root) %{_bindir}/gnome-kiosk-script
+%dir %{systemduserunitdir}/gnome-session@gnome-kiosk-script.target.d
+%{systemduserunitdir}/gnome-session@gnome-kiosk-script.target.d/session.conf
+%{systemduserunitdir}/org.gnome.Kiosk.Script.service
+%{systemduserunitdir}/org.gnome.Kiosk.target
+%{systemduserunitdir}/org.gnome.Kiosk@wayland.service
+%{systemduserunitdir}/org.gnome.Kiosk@x11.service
+%{_datadir}/gnome-session/sessions/gnome-kiosk-script.session
 %{_datadir}/gnome-session/sessions/org.gnome.Kiosk.SearchApp.session
+%{_datadir}/wayland-sessions/gnome-kiosk-script-wayland.desktop
 %{_datadir}/wayland-sessions/org.gnome.Kiosk.SearchApp.Session.desktop
+%{_datadir}/xsessions/gnome-kiosk-script-xorg.desktop
 %{_datadir}/xsessions/org.gnome.Kiosk.SearchApp.Session.desktop
 %{_desktopdir}/org.gnome.Kiosk.desktop
+%{_desktopdir}/org.gnome.Kiosk.Script.desktop
 %{_desktopdir}/org.gnome.Kiosk.SearchApp.desktop
