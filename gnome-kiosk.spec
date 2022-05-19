@@ -1,21 +1,23 @@
 Summary:	GNOME Kiosk - Mutter based compositor for kiosks
 Summary(pl.UTF-8):	GNOME Kiosk - oparty na Mutter zarządca składania dla punktów sprzedaży
 Name:		gnome-kiosk
-Version:	41.0
-Release:	2
+Version:	42.0
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-kiosk/41/%{name}-%{version}.tar.xz
-# Source0-md5:	577da387d7395022098a531ae7e06216
+Source0:	https://download.gnome.org/sources/gnome-kiosk/42/%{name}-%{version}.tar.xz
+# Source0-md5:	1e31a9280f86273eeff2834c0b73bfdd
+Patch0:		%{name}-meson.patch
+URL:		https://gitlab.gnome.org/GNOME/gnome-kiosk
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gtk4-devel >= 4.0
 BuildRequires:	ibus-devel >= 1.0
 BuildRequires:	meson
-BuildRequires:	mutter-devel >= 41
+BuildRequires:	mutter-devel >= 42
 BuildRequires:	ninja >= 1.5
-BuildRequires:	rpmbuild(macros) >= 1.596
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -25,7 +27,7 @@ Requires:	gnome-desktop >= 3.0
 Requires:	gnome-session
 Requires:	gnome-settings-daemon
 Requires:	ibus >= 1.0
-Requires:	mutter >= 40
+Requires:	mutter >= 42
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -54,6 +56,7 @@ mogących odrywać uwagę od aplikacji wykorzystującej go jako platformę.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %{__sed} -E -i -e '1s,#!\s*/usr/bin/sh(\s|$),#!/bin/sh\\1,' \
 	kiosk-script/gnome-kiosk-script
