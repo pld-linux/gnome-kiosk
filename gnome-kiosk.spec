@@ -1,12 +1,12 @@
 Summary:	GNOME Kiosk - Mutter based compositor for kiosks
 Summary(pl.UTF-8):	GNOME Kiosk - oparty na Mutter zarządca składania dla punktów sprzedaży
 Name:		gnome-kiosk
-Version:	43.0
+Version:	44.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-kiosk/43/%{name}-%{version}.tar.xz
-# Source0-md5:	5c383d78d695f5fdc5d3315600bba24c
+Source0:	https://download.gnome.org/sources/gnome-kiosk/44/%{name}-%{version}.tar.xz
+# Source0-md5:	33e652827543935001d18e5d2fd2e39d
 URL:		https://gitlab.gnome.org/GNOME/gnome-kiosk
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.0
@@ -14,7 +14,7 @@ BuildRequires:	gnome-desktop-devel >= 3.0
 BuildRequires:	gtk4-devel >= 4.0
 BuildRequires:	ibus-devel >= 1.0
 BuildRequires:	meson
-BuildRequires:	mutter-devel >= 43
+BuildRequires:	mutter-devel >= 44
 BuildRequires:	ninja >= 1.5
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	systemd-devel
@@ -26,7 +26,7 @@ Requires:	gnome-desktop >= 3.0
 Requires:	gnome-session
 Requires:	gnome-settings-daemon
 Requires:	ibus >= 1.0
-Requires:	mutter >= 43
+Requires:	mutter >= 44
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -87,6 +87,8 @@ rm -rf $RPM_BUILD_ROOT
 %{systemduserunitdir}/org.gnome.Kiosk.target
 %{systemduserunitdir}/org.gnome.Kiosk@wayland.service
 %{systemduserunitdir}/org.gnome.Kiosk@x11.service
+%{_datadir}/dconf/profile/gnomekiosk
+%{_datadir}/gnome-kiosk
 %{_datadir}/gnome-session/sessions/gnome-kiosk-script.session
 %{_datadir}/gnome-session/sessions/org.gnome.Kiosk.SearchApp.session
 %{_datadir}/wayland-sessions/gnome-kiosk-script-wayland.desktop
