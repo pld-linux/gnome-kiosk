@@ -1,12 +1,12 @@
 Summary:	GNOME Kiosk - Mutter based compositor for kiosks
 Summary(pl.UTF-8):	GNOME Kiosk - oparty na Mutter zarządca składania dla punktów sprzedaży
 Name:		gnome-kiosk
-Version:	46.0
+Version:	47.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-kiosk/46/%{name}-%{version}.tar.xz
-# Source0-md5:	6f13550dc312f02d2ce35ba26cf8bc3d
+Source0:	https://download.gnome.org/sources/gnome-kiosk/47/%{name}-%{version}.tar.xz
+# Source0-md5:	859f1eccb1503e366094cb02f093d441
 URL:		https://gitlab.gnome.org/GNOME/gnome-kiosk
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.0
@@ -14,7 +14,7 @@ BuildRequires:	gnome-desktop4-devel >= 42
 BuildRequires:	gtk4-devel >= 4.0
 BuildRequires:	ibus-devel >= 1.0
 BuildRequires:	meson
-BuildRequires:	mutter-devel >= 46
+BuildRequires:	mutter-devel >= 47
 BuildRequires:	ninja >= 1.5
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	systemd-devel
@@ -26,7 +26,7 @@ Requires:	gnome-desktop4 >= 42
 Requires:	gnome-session
 Requires:	gnome-settings-daemon
 Requires:	ibus >= 1.0
-Requires:	mutter >= 46
+Requires:	mutter >= 47
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
