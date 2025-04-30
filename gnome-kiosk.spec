@@ -1,22 +1,22 @@
 Summary:	GNOME Kiosk - Mutter based compositor for kiosks
 Summary(pl.UTF-8):	GNOME Kiosk - oparty na Mutter zarządca składania dla punktów sprzedaży
 Name:		gnome-kiosk
-Version:	47.0
+Version:	48.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-kiosk/47/%{name}-%{version}.tar.xz
-# Source0-md5:	859f1eccb1503e366094cb02f093d441
+Source0:	https://download.gnome.org/sources/gnome-kiosk/48/%{name}-%{version}.tar.xz
+# Source0-md5:	5ee6c5e0d195ca04a405c7c023178317
 URL:		https://gitlab.gnome.org/GNOME/gnome-kiosk
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gnome-desktop4-devel >= 42
 BuildRequires:	gtk4-devel >= 4.0
 BuildRequires:	ibus-devel >= 1.0
-BuildRequires:	meson
-BuildRequires:	mutter-devel >= 47
+BuildRequires:	meson >= 0.59
+BuildRequires:	mutter-devel >= 48
 BuildRequires:	ninja >= 1.5
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
@@ -26,7 +26,7 @@ Requires:	gnome-desktop4 >= 42
 Requires:	gnome-session
 Requires:	gnome-settings-daemon
 Requires:	ibus >= 1.0
-Requires:	mutter >= 47
+Requires:	mutter >= 48
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -60,14 +60,14 @@ mogących odrywać uwagę od aplikacji wykorzystującej go jako platformę.
 	kiosk-script/gnome-kiosk-script
 
 %build
-%meson build
+%meson
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 # no translations yet (as of 43)
 #find_lang %{name}.lang
@@ -83,7 +83,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gnome-kiosk-script
 %dir %{systemduserunitdir}/gnome-session@gnome-kiosk-script.target.d
 %{systemduserunitdir}/gnome-session@gnome-kiosk-script.target.d/session.conf
+%dir %{systemduserunitdir}/gnome-session@org.gnome.Kiosk.SearchApp.target.d
+%{systemduserunitdir}/gnome-session@org.gnome.Kiosk.SearchApp.target.d/session.conf
 %{systemduserunitdir}/org.gnome.Kiosk.Script.service
+%{systemduserunitdir}/org.gnome.Kiosk.SearchApp.service
 %{systemduserunitdir}/org.gnome.Kiosk.target
 %{systemduserunitdir}/org.gnome.Kiosk@wayland.service
 %{systemduserunitdir}/org.gnome.Kiosk@x11.service
