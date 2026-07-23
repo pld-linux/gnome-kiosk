@@ -1,12 +1,12 @@
 Summary:	GNOME Kiosk - Mutter based compositor for kiosks
 Summary(pl.UTF-8):	GNOME Kiosk - oparty na Mutter zarządca składania dla punktów sprzedaży
 Name:		gnome-kiosk
-Version:	48.0
+Version:	50.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gnome-kiosk/48/%{name}-%{version}.tar.xz
-# Source0-md5:	5ee6c5e0d195ca04a405c7c023178317
+Source0:	https://download.gnome.org/sources/gnome-kiosk/50/%{name}-%{version}.tar.xz
+# Source0-md5:	6ae6e1f4b47721cee83b0ccad09ed453
 URL:		https://gitlab.gnome.org/GNOME/gnome-kiosk
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.0
@@ -14,7 +14,7 @@ BuildRequires:	gnome-desktop4-devel >= 42
 BuildRequires:	gtk4-devel >= 4.0
 BuildRequires:	ibus-devel >= 1.0
 BuildRequires:	meson >= 0.59
-BuildRequires:	mutter-devel >= 48
+BuildRequires:	mutter-devel >= 50
 BuildRequires:	ninja >= 1.5
 BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	systemd-devel
@@ -26,7 +26,7 @@ Requires:	gnome-desktop4 >= 42
 Requires:	gnome-session
 Requires:	gnome-settings-daemon
 Requires:	ibus >= 1.0
-Requires:	mutter >= 48
+Requires:	mutter >= 50
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -59,8 +59,16 @@ mogących odrywać uwagę od aplikacji wykorzystującej go jako platformę.
 %{__sed} -i -e '1s,/usr/bin/sh,/bin/sh,' \
 	kiosk-script/gnome-kiosk-script
 
+%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' \
+	accessibility-panel/accessibility-panel.py.in \
+	notification-daemon/gnome-kiosk-notification-send.py.in \
+	notification-daemon/notification-daemon.py.in
+
 %build
-%meson
+%meson \
+	-Daccessibility-panel=true \
+	-Dinput-selector=true \
+	-Dnotification-daemon=true
 
 %meson_build
 
@@ -80,7 +88,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS README.md
 %attr(755,root,root) %{_bindir}/gnome-kiosk
+%attr(755,root,root) %{_bindir}/gnome-kiosk-accessibility-panel
+%attr(755,root,root) %{_bindir}/gnome-kiosk-notification-send
 %attr(755,root,root) %{_bindir}/gnome-kiosk-script
+%attr(755,root,root) %{_libexecdir}/gnome-kiosk-notification-daemon
+%{systemduserunitdir}/gnome-kiosk-notification-daemon.service
 %dir %{systemduserunitdir}/gnome-session@gnome-kiosk-script.target.d
 %{systemduserunitdir}/gnome-session@gnome-kiosk-script.target.d/session.conf
 %dir %{systemduserunitdir}/gnome-session@org.gnome.Kiosk.SearchApp.target.d
@@ -89,15 +101,15 @@ rm -rf $RPM_BUILD_ROOT
 %{systemduserunitdir}/org.gnome.Kiosk.SearchApp.service
 %{systemduserunitdir}/org.gnome.Kiosk.target
 %{systemduserunitdir}/org.gnome.Kiosk@wayland.service
-%{systemduserunitdir}/org.gnome.Kiosk@x11.service
+%{_datadir}/dbus-1/services/org.freedesktop.Notifications.service
+%{_datadir}/dbus-1/services/org.gtk.Notifications.service
 %{_datadir}/dconf/profile/gnomekiosk
 %{_datadir}/gnome-kiosk
 %{_datadir}/gnome-session/sessions/gnome-kiosk-script.session
 %{_datadir}/gnome-session/sessions/org.gnome.Kiosk.SearchApp.session
 %{_datadir}/wayland-sessions/gnome-kiosk-script-wayland.desktop
 %{_datadir}/wayland-sessions/org.gnome.Kiosk.SearchApp.Session.desktop
-%{_datadir}/xsessions/gnome-kiosk-script-xorg.desktop
-%{_datadir}/xsessions/org.gnome.Kiosk.SearchApp.Session.desktop
 %{_desktopdir}/org.gnome.Kiosk.desktop
+%{_desktopdir}/org.gnome.Kiosk.AccessibilityPanel.desktop
 %{_desktopdir}/org.gnome.Kiosk.Script.desktop
 %{_desktopdir}/org.gnome.Kiosk.SearchApp.desktop
