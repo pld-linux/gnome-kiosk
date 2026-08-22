@@ -2,16 +2,17 @@ Summary:	GNOME Kiosk - Mutter based compositor for kiosks
 Summary(pl.UTF-8):	GNOME Kiosk - oparty na Mutter zarządca składania dla punktów sprzedaży
 Name:		gnome-kiosk
 Version:	50.1
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://download.gnome.org/sources/gnome-kiosk/50/%{name}-%{version}.tar.xz
 # Source0-md5:	6ae6e1f4b47721cee83b0ccad09ed453
 URL:		https://gitlab.gnome.org/GNOME/gnome-kiosk
+BuildRequires:	dconf
+BuildRequires:	gdk-pixbuf2-devel
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gnome-desktop4-devel >= 42
-BuildRequires:	gtk4-devel >= 4.0
 BuildRequires:	ibus-devel >= 1.0
 BuildRequires:	meson >= 0.59
 BuildRequires:	mutter-devel >= 50
@@ -25,8 +26,12 @@ Requires:	gdm
 Requires:	gnome-desktop4 >= 42
 Requires:	gnome-session
 Requires:	gnome-settings-daemon
+Requires:	gtk4
 Requires:	ibus >= 1.0
+Requires:	libadwaita
 Requires:	mutter >= 50
+Requires:	python3-dbus
+Requires:	python3-pygobject3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -34,9 +39,8 @@ GNOME Kiosk provides a desktop environment suitable for fixed purpose,
 or single application deployments like wall displays and point-of-sale
 systems.
 
-It provides a very minimal Wayland display server and compositor and
-Xorg compositor and window manager. It automatically starts
-applications fullscreen.
+It provides a very minimal Wayland display server and compositor. It
+automatically starts applications fullscreen.
 
 Notably, GNOME Kiosk features no panels, dashes, or docks that could
 distract from the application using it as a platform.
@@ -47,8 +51,7 @@ zastosownia albo wdrożeń jednoaplikacyjnych, takich jak ekrany ścienne
 czy systemy dla punktów sprzedaży.
 
 Zapewnia bardzo minimalny serwer wyświetlania i zarządcę składania
-Wayland oraz zarządcę składania i okien Xorg. Automatycznie uruchamia
-aplikacje w trybie pełnoekranowym.
+Wayland. Automatycznie uruchamia aplikacje w trybie pełnoekranowym.
 
 GNOME Kiosk w szczególności nie zawiera paneli, pasków czy doków,
 mogących odrywać uwagę od aplikacji wykorzystującej go jako platformę.
@@ -67,7 +70,6 @@ mogących odrywać uwagę od aplikacji wykorzystującej go jako platformę.
 %build
 %meson \
 	-Daccessibility-panel=true \
-	-Dinput-selector=true \
 	-Dnotification-daemon=true
 
 %meson_build
@@ -86,7 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 # -f %{name}.lang
 %defattr(644,root,root,755)
-%doc NEWS README.md
+%doc CONFIG.md NEWS README.md
 %attr(755,root,root) %{_bindir}/gnome-kiosk
 %attr(755,root,root) %{_bindir}/gnome-kiosk-accessibility-panel
 %attr(755,root,root) %{_bindir}/gnome-kiosk-notification-send
